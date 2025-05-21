@@ -9,6 +9,13 @@ public class TextNormalizer {
     private static final Set<String> NOISE_WORDS = Set
             .of("mr", "mrs", "ms", "the", "and", "to", "an", "a", "of", "dr", "sir", "miss");
 
+    /**
+     * Normalizes a name string by lowercasing, removing punctuation and noise words,
+     * and sorting the remaining tokens alphabetically.
+     *
+     * @param input raw name input
+     * @return normalized name or empty string if no valid tokens remain
+     */
     public static String normalize(String input) {
         if (input == null || input.isBlank()) {
             return "";

@@ -10,6 +10,11 @@ import org.springframework.stereotype.Component;
 
 import java.util.*;
 
+/**
+ * Name matcher based on fuzzy string similarity using Apache Commons Text algorithms.
+ *
+ * <p>Uses a weighted combination of Levenshtein, Jaro-Winkler and Jaccard similarity metrics.</p>
+ */
 @Slf4j
 @Component
 public class ApacheNameMatcher implements NameMatcher {
@@ -24,6 +29,13 @@ public class ApacheNameMatcher implements NameMatcher {
         this.properties = properties;
     }
 
+    /**
+     * Attempts to find the best matching name from the list of candidates.
+     *
+     * @param normalizedInput normalized input name
+     * @param candidates list of sanctioned names (with normalized values)
+     * @return best match with score, or empty if no match passes threshold
+     */
     @Override
     public Optional<MatchResult> match(String normalizedInput, List<SanctionedName> candidates) {
         if (candidates.isEmpty()) {

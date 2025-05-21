@@ -23,6 +23,15 @@ public class NameCheckService {
         this.nameMatcher = nameMatcher;
     }
 
+    /**
+     * Checks whether the given name matches any sanctioned name.
+     *
+     * <p>Delegates the actual matching logic to the configured {@link NameMatcher} implementation.</p>
+     *
+     * @param inputName Input name to check
+     * @return detailed result of the matching operation
+     * @throws EmptyNormalizedNameException if the normalized input name is empty
+     */
     public MatchResultDto check(String inputName) {
         log.info("Starting check for name '{}'", inputName);
 
