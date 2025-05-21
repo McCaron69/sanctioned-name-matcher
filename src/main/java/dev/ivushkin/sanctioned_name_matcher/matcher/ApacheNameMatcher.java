@@ -11,9 +11,8 @@ import org.springframework.stereotype.Component;
 import java.util.*;
 
 /**
- * Name matcher based on fuzzy string similarity using Apache Commons Text algorithms.
- *
- * <p>Uses a weighted combination of Levenshtein, Jaro-Winkler and Jaccard similarity metrics.</p>
+ * Matches normalized names using string similarity algorithms
+ * (Levenshtein, Jaro-Winkler, Jaccard) with configurable weights.
  */
 @Slf4j
 @Component
