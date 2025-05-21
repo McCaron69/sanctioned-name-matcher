@@ -38,8 +38,12 @@ public class SanctionedNameController {
     @Operation(summary = "Get sanctioned name by ID")
     @ApiResponse(responseCode = "200", description = "Sanctioned name returned")
     public ResponseEntity<SanctionedNameResponseDto> getSanctionedNameById(@PathVariable long id) {
-        var entity = sanctionedNameService.getById(id);
-        var nameDto = new SanctionedNameResponseDto(entity.getId(), entity.getName(), entity.getNormalizedName());
+        var sanctionedName = sanctionedNameService.getById(id);
+        var nameDto = new SanctionedNameResponseDto(
+                sanctionedName.getId(),
+                sanctionedName.getName(),
+                sanctionedName.getNormalizedName()
+        );
         return ResponseEntity.ok(nameDto);
     }
 
