@@ -3,6 +3,9 @@ package dev.ivushkin.sanctioned_name_matcher.controller;
 import dev.ivushkin.sanctioned_name_matcher.dto.SanctionedNameRequestDto;
 import dev.ivushkin.sanctioned_name_matcher.dto.SanctionedNameResponseDto;
 import dev.ivushkin.sanctioned_name_matcher.service.SanctionedNameService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/sanctions")
+@Tag(name = "Sanctioned Names", description = "CRUD operations for managing sanctioned names")
 public class SanctionedNameController {
 
     private final SanctionedNameService sanctionedNameService;
@@ -20,6 +24,7 @@ public class SanctionedNameController {
     }
 
     @GetMapping
+    @Operation(summary = "Get all sanctioned names")
     public List<SanctionedNameResponseDto> getAllSanctionedNames() {
         return sanctionedNameService.getListOfSanctionedNames().stream()
                 .map(name -> new SanctionedNameResponseDto(
@@ -30,6 +35,8 @@ public class SanctionedNameController {
     }
 
     @GetMapping("/{id}")
+    @Operation(summary = "Get sanctioned name by ID")
+    @ApiResponse(responseCode = "200", description = "Sanctioned name returned")
     public ResponseEntity<SanctionedNameResponseDto> getSanctionedNameById(@PathVariable long id) {
         var entity = sanctionedNameService.getById(id);
         var nameDto = new SanctionedNameResponseDto(entity.getId(), entity.getName(), entity.getNormalizedName());
@@ -37,6 +44,8 @@ public class SanctionedNameController {
     }
 
     @PostMapping
+    @Operation(summary = "Add new sanctioned name")
+    @ApiResponse(responseCode = "200", description = "Sanctioned name added")
     public ResponseEntity<SanctionedNameResponseDto> addSanctionedName(
             @RequestBody @Valid SanctionedNameRequestDto request
     ) {
@@ -50,6 +59,8 @@ public class SanctionedNameController {
     }
 
     @PutMapping("/{id}")
+    @Operation(summary = "Update sanctioned name")
+    @ApiResponse(responseCode = "200", description = "Sanctioned name updated")
     public ResponseEntity<SanctionedNameResponseDto> updateSanctionedName(
             @PathVariable long id,
             @RequestBody @Valid SanctionedNameRequestDto request
@@ -64,9 +75,10 @@ public class SanctionedNameController {
     }
 
     @DeleteMapping("/{id}")
+    @Operation(summary = "Delete sanctioned name")
+    @ApiResponse(responseCode = "204", description = "Sanctioned name deleted")
     public ResponseEntity<Void> deleteSanctionedName(@PathVariable long id) {
         sanctionedNameService.deleteSanctionedName(id);
         return ResponseEntity.noContent().build();
     }
-
 }
